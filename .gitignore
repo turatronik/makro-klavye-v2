@@ -1,0 +1,15 @@
+# Visual Studio / .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Python
+__pycache__/
+*.pyc
+
+# İşletim sistemi
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,103 @@
+MAKRO KLAVYE v2 - TÜM PROJE (son, doğrulanmış hal)
+====================================================
+RP2040-Zero + 1.3" ST7789 240x240 ekran + 2x EC11 encoder + 6x MX anahtar + 18x WS2812B
+(12 taban LED'i + 6 tuş LED'i). Kapak (tuşlar) ve eğik panel (ekran+encoder) ayrı ayrı,
+dikey kaldırılarak çıkar; aradaki bağlantı pin header konnektörleriyle.
+
+KLASÖRLER
+  1_BASKI ............ ana parçalar (baskı yönünde, destek gerekmez)
+  3_TESTLER .......... tolerans denemeleri
+  4_GORSELLER ........ son_hal, baglanti_semasi (Zero pinleri), konnektor_semasi (1x8 ve 1x14 pin sırası),
+                       kablo_yerlesimi (kasa içi tel yolları), led_yerlesimi, teknik_cizim, taban_son
+  5_TEST_KODU ........ CIRCUITPY sürücüsüne kopyala (code.py + lib)
+  6_MODEL_KAYNAK ..... parametrik model (Python + manifold3d), ileride değişiklik için
+
+1_BASKI
+  01_taban_SEFFAF_PETG ....... 1 adet, şeffaf PETG, oturduğu gibi. Tek parça: 12 taban LED yuvası,
+                               her tuş sırası için tek parça eğik LED yükseltici blok (yan çıkıntısız, kartı tutan
+                               tırnak yerinde; LED'i tuşun ortasına hizala), arka blok 14'lü yuvayla birleşik ve panel konnektörünün DİŞİ 1x14 yuvası.
+                               Sol taban LED'leri (3. ve 4.) içeri alınıp yatay (x yönünde) yerleştirildi.
+                               Ön lastik ayak yuvaları LED ceplerinin önüne alındı (x ±18, ön kenardan 6.5 mm).
+  02_govde ................... 1 adet, oturduğu gibi. Sol duvarda DİŞİ 1x8 yuvası (tabandan yükselen sütun).
+  03_duz_kapak ............... 1 adet, üst yüz tablada. Altında ERKEK 1x8 yuvası (duvardan 1.5 mm içeride);
+                               arka alt kenarı dik kesik (panel takılıyken de dikey kalkar).
+  04_egik_panel .............. 1 adet, üst yüz tablada. Altında ERKEK 1x14 yuvası.
+  05_halka_difuzor_x6_SEFFAF . 6 adet, üst yüz tablada.
+  06_dugme_x2 ................ 2 adet (encoder düğmesi).
+  07_tus_basligi_x6 .......... 6 adet, üst yüz tablada (sap yukarı). 18x18 alt, 14x14 üst, 7.4 mm.
+                               Artı yuvası 1.32 x 4.22 mm (3.7 derin), sap 5.5 mm çap, 3.9 mm boy.
+
+3_TESTLER
+  00_tolerans_testi .. MX yuvası, halka, encoder deliği, vida delikleri, USB-C ağzı.
+  00b_ekran_testi .... eğik panelin ekran bölgesi (cam cebi, pin yarığı, M2 direkler).
+  00d_tek_sap_testi .. tuş başlığı sapının birebir kopyası; 07'yi basmadan önce anahtarda dene.
+
+KONNEKTÖRLER
+  Header: 1x40 erkek + 1x40 dişi (2.54 mm) al; 8'lik ve 14'lük kes.
+  Erkek header'lar (kapak ve panelde gömülü yuvalar): kısa uçları 90° iç tarafa bük, telleri uçlara
+    lehimle (28 AWG gibi ince tel), header'ı alttan yukarı kaydır; bükülü uçlar iç taraftaki açık yarıktan geçer.
+    Bir damla yapıştırıcıyla sabitle.
+  Dişi header'lar (tabanda 1x14, gövdede 1x8 gömülü yuvalar): kısa uçları iç tarafa bük
+    (1x14: arkaya, Zero'ya; 1x8: içeri), telleri lehimle, header'ı üstten aşağı kaydır; bükülü uçlar
+    iç taraftaki açık yarıktan çıkar. Bir damla yapıştırıcıyla sabitle.
+  Dişi yuvaların cebi her yandan 0.35 mm paylı (kesilmiş header ucu rahat girer).
+
+  KAPAK 1x8 (önden arkaya): T1 T2 T3 T4 T5 T6 GND, 8. pin yedek. Tuşların ortak ucu GND'ye.
+  PANEL 1x14 (önden bakınca soldan sağa):
+     1 SolEnc A   2 SolEnc B   3 SolEnc SW   4 GND   5 3V3   6 SCK   7 SDA
+     8 RES        9 DC        10 BLK        11 GND  12 SagEnc SW  13 SagEnc B  14 SagEnc A
+     Encoderların ortak (C) ucu ve basma anahtarının ikinci ucu panel tarafında GND'ye.
+
+PİN PLANI
+  Ekran: SCL GP10, SDA GP11, DC GP9, RES GP12, BLK GP13
+  Sol encoder: A GP0, B GP1, bas GP2   |  Sağ encoder: A GP3, B GP4, bas GP5
+  Tuşlar 1-6: GP6, GP7, GP8, GP14, GP15, GP26
+  RGB (18x WS2812B): DIN GP27, 5V, GND  - parlaklığı yazılımda %40 ile sınırla
+
+ÖNERİLEN AYARLAR
+  Katman 0.2 mm, duvar 3 çevre, doluluk %20, destek yok.
+  Kapak ve panel: ilk katman yüzey olacağı için düz/temiz tabla.
+  Not: panelin ekran direkleri yalnızca 0.4 mm yüksek, ilk katmanlarda değil son katmanlarda basılır.
+  Halka ve taban: şeffaflık için doluluk %100 ya da 0.2 mm katman, yavaş baskı daha iyi dağıtır.
+
+TOLERANSLAR (modelde hazır)
+  MX yuvası 14.1 mm, alttan 1.5 mm sac
+  Halka: T profil. Yarığa giren gövde 1.3 mm (her yandan 0.15 pay), kapağın 1 mm üstünde
+  yalnızca içe 0.9 mm taşan başlık (dışta gövdeyle aynı hizada); köprü çentikleri 0.35 mm pay, alt kenarlarda 0.3 mm pah
+  Encoder deliği 7.4 mm (M7)
+  Ekran camı cebi 30.0 x 27.0 (cam 29 x 26; her yönde 0.5 mm pay), pencere 24.4 mm
+  RP2040-Zero yuvası her yandan 0.3 mm
+  USB-C ağzı 9.3 x 3.7 mm (soket 8.9 x 3.3)
+  Düz kapak / eğik panel birleşiminde 0.2 mm boşluk
+  Vida: kılavuz 2.6 mm, geçiş 3.4 mm, havşa 6.4 mm
+  Düğme mili: 6.2 mm, düz yüz 4.65 mm (EC11 D-mil)
+  Ekran: 4 vida direği (M2, kılavuz 1.6 mm, delikler kart kenarlarından 2.5 mm içeride),
+         pin lehim uçları için 4.8 x 18 mm yarık, şerit kablo bükümü için cep uzantısı
+
+VİDALAR
+  Kapaklar: 8x M3x10 havşa başlı sac vidası (üstten)
+  Taban:    4x M3x8 havşa başlı sac vidası (alttan)
+  Ekran:    4x M2x4 sac vidası (arkadan, kart deliklerinden)
+  4x 10 mm yapışkanlı lastik ayak
+
+VİDALAR VE MALZEME
+  Kapaklar: 8x M3x10 havşa başlı sac vidası (üstten)
+  Taban:    4x M3x8 havşa başlı sac vidası (alttan)
+  Ekran:    4x M2x4 sac vidası (arkadan, kart deliklerinden)
+  4x 10 mm yapışkanlı lastik ayak (tabanın altındaki 4 sığ yuvaya), 330 ohm direnç (LED veri hattı, GP27 çıkışında)
+
+MONTAJ SIRASI
+  1. Zero'daki başlıkları sök, kabloları doğrudan lehimle. Ekranın pinlerine kabloları lehimle.
+  2. Taban LED'lerini (12) LED aşağı bakacak şekilde tabandaki yuvalara bastır (sıra: led_yerlesimi.png).
+  3. Tuş LED'lerini (6) tabandaki eğik bloklara, her biri kendi tuşunun ortasına gelecek şekilde oturt
+     (kartın alt kenarı tırnağa); bir damla yapıştırıcıyla sabitle.
+  4. Zero'yu tabandaki yuvaya oturt (USB-C arka duvara dayanır), gövdeyi tabana alttan vidala.
+  5. Dişi header'ları tabandaki (1x14) ve gövdedeki (1x8) yuvalara tak.
+  6. Ekranı eğik panelin altındaki cebe yerleştir (pinler solda), M2 vidalarla direklere vidala;
+     encoderları takıp somunla sık. Panelin erkek 1x14 header'ını tak ve telleri bağla.
+  7. Anahtarları kapağa üstten tak, kablolarını erkek 1x8 header'a bağla.
+  8. Paneli ve kapağı üstten vidala. Halkaları bastır, tuş başlıklarını ve düğmeleri tak.
+  9. 5_TEST_KODU içeriğini CIRCUITPY'ye kopyala: her tuş, encoder ve LED ekranda/seri portta görünür.
+
+  Not: header yuvalarında tarak dişi yok (kırılıyordu); iç taraf boydan boya açık yarık.
+  Header'ı yerine oturtup bir damla yapıştırıcıyla sabitlemek yeterli.

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Makro Klavye v2 ekran uygulaması: tepside çalışır, çalan medyayı ve ses seviyesini klavyenin ekranına gönderir. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <RootNamespace>MakroKeyboardDisplay</RootNamespace>
+    <AssemblyName>MakroKeyboardDisplay</AssemblyName>
+    <ApplicationIcon>MakroKlavye.ico</ApplicationIcon>
+    <Version>3.2.0</Version>
+    <Product>Makro Klavye Ekran</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Visual Studio'nun ilk oluşturduğu (.NET Framework) şablon dosyaları artık kullanılmıyor -->
+    <Compile Remove="Form1.cs;Form1.Designer.cs;Properties\**" />
+    <EmbeddedResource Remove="Form1.resx;Properties\**" />
+    <None Remove="Properties\**;App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+  </ItemGroup>
+
+</Project>
