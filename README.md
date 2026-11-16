@@ -96,5 +96,7 @@ ayarları tek dosyada durur.
 
 ## Lisans
 
-Yazılım MIT ([LICENSE](LICENSE)), 3D modeller ve görseller CC BY-SA 4.0
-([3D/LICENSE](3D/LICENSE)).
+Bu depodaki her şey (yazılım, 3D modeller ve görseller) [CC BY-NC-SA 4.0](LICENSE)
+lisanslıdır: yapabilir, değiştirebilir ve paylaşabilirsin; Turatronik'i kaynak
+göstermen ve değiştirdiğin sürümü aynı lisansla paylaşman gerekir. Satmak ve ticari
+amaçla kullanmak yasaktır.
